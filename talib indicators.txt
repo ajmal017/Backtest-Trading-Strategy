@@ -1,0 +1,22 @@
+on balance volume - 0
+true range - 0 
+aroon -1
+aroon oscillator - 1
+momentum indicator - 1
+median price - 1
+typical price - 1
+weighted close price - 1
+trix - 1
+bollinger bands - 2
+ADX - 2
+balance of power - 2
+super trend - 2
+commodity channel index - 3
+chande momentum oscillator -3
+macd - 3
+money flow index - 3
+rsi - 3
+stochastics - 3
+williams %r - 3
+atr band - 3
+moving average - 4

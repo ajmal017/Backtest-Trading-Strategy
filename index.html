@@ -1,0 +1,352 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="HandheldFriendly" content="true">
+	<meta charset="utf-8" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
+	<link href="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.css" rel="stylesheet"/>  
+	<script type="text/javascript">
+		this.indicators_count =0;
+		function AddDiv() {
+			var content = 
+				[
+				{title: 'On Balance Volume'},
+				{title: 'True Range'}, 
+				{title: 'Aroon'},
+				{title: 'Aroon Oscillator'},
+				{title: 'Momentum Indicator'},
+				{title: 'Median Price'},
+				{title: 'Typical Price'}, 
+				{title: 'Weighted Close Price'},
+				{title: 'Trix'},
+				{title: 'Bollinger Bands'},
+				{title: 'ADX'},
+				{title: 'Balance Of Power'}, 
+				{title: 'Super Trend'},
+				{title: 'Commodity Channel Index'},
+				{title: 'Chande Momentum Oscillator'},
+				{title: 'MACD'},
+				{title: 'Money Flow Index'}, 
+				{title: 'RSI'},
+				{title: 'Stochastics'},
+				{title: 'Williams %R'},
+				{title: 'ATR Band'}, 
+				{title: 'Moving Average'},
+				{title: 'Open'},
+				{title: 'High'},
+				{title: 'Close'},
+				{title: 'Low'},
+				];
+			var divFormbody = $("<div class='form-body' style='margin-top:2%;'/>");
+			var divIndicators = $("<div class='indicators' />");
+			var divUiActionInputSearch = $("<div class='ui action input search' />");
+			var divUiIconInput = $("<div class='ui icon input' />");
+			var inputLeftIndicator = $("<input type='text' class='prompt text-line' placeholder='Indicator ex: EMA' size='23' />");
+			inputLeftIndicator.attr("id","entry_left_indicator"+this.indicators_count);
+			var divResults= $("<div class='results' />");
+			var divSpace = $("<div class='space' />");
+			var divUiCompactMenu = $("<div class='ui compact menu' />");
+			var divUiDropdownItem = $("<div class='ui dropdown item' />");
+			divUiDropdownItem.attr("id","comparator"+this.indicators_count);
+			var divInputComparator = $("<input name='comparator' type='hidden' />");
+			var divDropdownIcon = $("<i class='dropdown icon' />");
+			var divDefaultText = $("<div class='default text'>Select Comparator</div>");
+			var divMenu = $("<div class='menu' />");
+			var divItems = $("<div class='item'>higher than</div><div class='item'>lower than</div><div class='item'>crosses above</div><div class='item'>crosses below</div><div class='item'>equal to</div>");
+			var divSpace1 = $("<div class='space'>");
+			var divUiActionInputSearch1 = $("<div class='ui action input search' />");
+			var divUiiconInput1 = $("<div class='ui icon input' />");
+			var inputRightIndicator = $("<input type='text' class='prompt text-line' placeholder='Indicator ex: EMA' size='23' />");
+			inputRightIndicator.attr("id","entry_right_indicator"+this.indicators_count);
+			var divResults1 = $("<div class='results' />");
+
+			divUiIconInput.append(inputLeftIndicator);
+			divUiActionInputSearch.append(divUiIconInput);
+			divUiActionInputSearch.append(divResults);
+			divIndicators.append(divUiActionInputSearch);
+			divFormbody.append(divIndicators);
+			divMenu.append(divItems);
+			divUiDropdownItem.append(divInputComparator);
+			divUiDropdownItem.append(divDropdownIcon);
+			divUiDropdownItem.append(divDefaultText);
+			divUiDropdownItem.append(divMenu);
+			divUiCompactMenu.append(divUiDropdownItem);
+			divSpace.append(divUiCompactMenu);
+			divIndicators.append(divSpace);
+			divFormbody.append(divIndicators);
+			divUiiconInput1.append(inputRightIndicator);
+			divUiActionInputSearch1.append(divUiiconInput1);
+			divUiActionInputSearch1.append(divResults1);
+			divSpace1.append(divUiActionInputSearch1);
+			divIndicators.append(divSpace1);
+			divFormbody.append(divIndicators);
+			
+			var dvContainer = $("#add-form-elements");
+			var btnRemove = $("<div class='space'><a href='#' id='Remove'><span class='gray'><u>Clear</u></span></a></div>");
+			btnRemove.click(function () {
+			console.log(dvContainer.children.length);
+			//if(dvContainer.children.length > 2)
+				$(this).parent().remove();
+			});
+			divIndicators.append(btnRemove);
+			divFormbody.append(divIndicators);
+
+			dvContainer.append(divFormbody);
+			divFormbody.find('.ui.search').search({
+						type: 'standard',
+						source: content,
+						searchFields: ['title'],
+				});
+			divFormbody.find(('.label.ui.dropdown')).dropdown();
+			divFormbody.find('.no.label.ui.dropdown').dropdown({useLabels: true});
+			divFormbody.find('.ui.dropdown').dropdown();
+			this.indicators_count++;
+			//console.log($('#comparator0').dropdown('get value'));
+		}
+		$(document).ready(function() { 
+			$('form :input').attr('value', '');
+			var content = 
+			[
+			{title: 'TCS'}, 
+			{title: 'Reliance'},
+			{title: 'HDFC Bank'},
+			{title: 'Infosys'},
+			];
+			$('.ui.search')
+				.search({
+						type: 'standard',
+						source: content,
+						searchFields: ['title'],
+				});
+			$('.label.ui.dropdown').dropdown();
+			$('.no.label.ui.dropdown').dropdown({useLabels: true});
+			$('.ui.dropdown').dropdown();
+			AddDiv();
+		});
+		function PrepareDataSet() {
+			var company_list = document.getElementById("company_list").value;
+			var chart = $('#chart').dropdown('get value');
+			var position = $('#position').dropdown('get value');
+			var quantity = document.getElementById("quantity").value;
+			var stoploss = document.getElementById("stoploss").value;
+			var target = document.getElementById("target").value;
+			var indicator = [];
+			var comparator = [];
+			
+			var testArray = [ company_list, chart, position, quantity, stoploss, target ];
+			for(var i = 0; i < testArray.length; i++){
+				console.log(testArray[i]);
+			}
+			$("#add-form-elements").find("input").each(function(){ if(this.id !=='')indicator.push(this.id); });
+			$("#add-form-elements").find("div").each(function(){ if(this.id !=='')comparator.push(this.id); });
+			for(var i=0; i < indicator.length; i++) {
+					indicator[i] = document.getElementById(""+indicator[i]).value;
+					comparator[i] = document.getElementById(""+comparator[i]).value;
+			}
+		}
+	</script>
+<style>
+html {
+	height:100%;
+}
+body  {
+	margin-top:7%;
+}
+.text-line {
+	background: transparent;
+	border: none;
+	border-bottom: 1px solid gray;
+}
+.main-form-div {
+	margin-top:4%;
+	margin-left: 20%;
+}
+.main-form-div1 {
+	margin-top:1%;
+	margin-left: 20%;
+}
+.form-heading {
+	float: left;
+	text-align:center;
+}
+.form-body {
+	margin-left:10%;
+}
+.form-body1 {
+	margin-left:1%;
+}
+.buy {
+	width:30%;
+}
+.right-heading {
+	float:right;
+	margin-right:35%;
+	display: inline;
+}
+.center-heading {
+	float:center;
+	margin-right:35%;
+	display: inline;
+}
+.right-heading-qty {
+	float:right;
+	margin-right:35%;
+	margin-top:1%;
+	display: inline;
+}
+.ui.menu .item
+{
+	width:375px;
+}
+.indicators .ui.menu .item
+{
+	width:230px;
+}
+.center-btn {
+	margin-left:36%;
+}
+.space {
+	display:inline;
+	margin-left:3%;
+}
+.stoploss-color {
+	height:40px;
+	background:#ffb6c1;
+	border-bottom: 1px solid red;
+	padding-left:0.5%;
+}
+.target-color {
+	height:40px;
+	background:#9cff9c ;
+	border-bottom: 1px solid green;
+	padding-left:1%;
+}
+.ui.search > .results {
+	width:28em;
+}
+.gray {
+	color:gray;
+}
+.ui.dropdown {
+  width: 29%;
+}
+.ui.form .inline.field > .selection.dropdown{
+width:29%;
+}
+.ui.input input {
+	background: transparent;
+	border: none;
+	border-bottom: 1px solid gray;
+	border-radius:100%;
+}
+.ui.input.focus input, .ui.input input:focus {
+	background:transparent;
+}
+</style>
+</head>
+<body>
+<form id="backtest" action="loader.html" method="post">
+	<div class="main-form-div">
+		<div class="form-heading">
+			Stock
+		</div>
+		<div class="form-body">
+			<div class="ui action input search">
+				<div class="ui icon input">
+					<input type="text" class="prompt" placeholder="Add instruments" size="45" id="company_list" autocomplete="off"  />
+					<i class="search icon"></i>
+				</div>
+					<div class="results"></div>
+			</div>
+
+			<div class="right-heading">
+				<div class="ui compact menu">
+					<div class="ui dropdown item" id="chart">
+					<input name="chart" type="hidden">
+						<i class="dropdown icon"></i>
+						<div class="default text">Select Chart</div>
+							<div class="menu">
+								<div class="item">1 Minute</div>
+								<div class="item">3 Minutes</div>
+								<div class="item">5 Minutes</div>
+								<div class="item">10 Minutes</div>
+								<div class="item">15 Minutes</div>
+								<div class="item">30 Minutes</div>
+								<div class="item">1 Hour</div>
+							</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="main-form-div">
+		<div class="form-heading">
+			Position
+		</div>
+		<div class="form-body">
+			<div class="ui compact menu">
+				<div class="ui dropdown item" id="position">
+					<input name="position" type="hidden">
+					<i class="dropdown icon"></i>
+						<div class="default text">Select Position</div>
+						<div class="menu">
+							<div class="item">Buy</div>
+							<div class="item">Sell</div>
+						</div>
+				</div>
+			</div>
+			<div class="right-heading-qty">
+				<input type="number" class="text-line" placeholder="Quantity" size="50" id="quantity" autocomplete="off" />
+			</div>
+		</div>
+	</div>
+
+	<div class="main-form-div">
+		<div class="form-heading">
+			Entry
+		</div>
+		<div class="form-body">
+				Add a Comparator (Hint)
+		</div>
+		<div id="add-form-elements"></div>
+	</div>
+
+	<div class="main-form-div1">
+		<div class="form-body">
+			<a href="#" id="Add" onclick="AddDiv()">+ Add another condition</a>
+		</div>
+	</div>
+
+	<div class="main-form-div">
+		<div class="form-heading">
+			Exit
+		</div>
+		<div class="form-body">
+			<a href="#" id="Add">Click to add exit condition <span class="gray">(optional)</span></a>
+		</div>
+	</div>
+
+	<div class="main-form-div">
+		<div class="form-body">
+			<input type="text" class="text-line stoploss-color" placeholder=" Stoploss" size="50" id="stoploss" autocomplete="off" />
+			<div class="right-heading">
+				<input type="text" class="text-line target-color" placeholder=" Target" size="50" id="target" autocomplete="off" />
+			</div>
+		</div>
+	</div>
+
+	<div class="main-form-div">
+		<div class="center-btn">
+			<button class="ui black button" type="submit" onclick="PrepareDataSet()">Backtest</button>
+		</div>
+	</div>
+
+</form>
+
+</body>
+</html>
